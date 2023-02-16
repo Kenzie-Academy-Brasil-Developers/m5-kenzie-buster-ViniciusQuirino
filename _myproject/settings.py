@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +30,7 @@ ALLOWED_HOSTS = []
 
 THIRD_PARTY_APPS = ["rest_framework"]
 
-MY_APPS = ["users"]
+MY_APPS = ["users", "movies"]
 # Application definition
 
 DJANGO_APPS = [
@@ -102,6 +103,13 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+SIMPLE_JWT = {
+    # padrao 5 min
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=5),
+    # padrao 24hr
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=2),
+}
 
 
 # Internationalization

@@ -1,6 +1,13 @@
 from django.shortcuts import render
 from rest_framework.views import APIView, Request, Response
 from .serializers import UserSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+# from .serializers import CustomJWTSerializer
+
+
+class LoginView(TokenObtainPairView):
+    ...
 
 
 class UserView(APIView):
