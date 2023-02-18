@@ -11,13 +11,13 @@ class Seasons(models.TextChoices):
 
 class Movie(models.Model):
     title = models.CharField(max_length=127)
-    duration = models.CharField(max_length=10, null=True)
+    duration = models.CharField(max_length=10, null=True, default=None)
     rating = models.CharField(
         max_length=127, choices=Seasons.choices, default=Seasons.G
     )
-    synopsis = models.TextField(null=True)
+    synopsis = models.TextField(null=True, default=None)
 
-    added_by = models.ForeignKey(
+    user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="movie", null=True
     )
 
@@ -26,7 +26,7 @@ class Movie(models.Model):
 
 
 class MovieOrder(models.Model):
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=5, decimal_places=2)
     buyed_at = models.DateTimeField(auto_now_add=True)  # coprou em
 
     movie = models.ForeignKey(

@@ -7,24 +7,25 @@ import ipdb
 class MovieSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     title = serializers.CharField(max_length=127)
-    duration = serializers.CharField(max_length=10, allow_null=True)
+    duration = serializers.CharField(max_length=10, allow_null=True, default=None)
     rating = serializers.ChoiceField(choices=Seasons.choices, default=Seasons.G)
-    synopsis = serializers.CharField(allow_null=True)
+    synopsis = serializers.CharField(allow_null=True, default=None)
 
     added_by = serializers.SerializerMethodField()
+
+    def get_added_by(self, obj):
+        user = obj.user.email
+        return user
 
     def create(self, validated_data: dict) -> Movie:
         # ipdb.set_trace()
         return Movie.objects.create(**validated_data)
 
-    def get_added_by(self, obj):
-        added_by = obj.added_by.email
-        return added_by
 
 
 class OrderMovieSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    price = serializers.FloatField()
+    price = serializers.DecimalField(max_digits=5, decimal_places=2)
     buyed_at = serializers.DateTimeField(read_only=True)
 
     title = serializers.SerializerMethodField()
